@@ -37,6 +37,15 @@ public class Baekjoon2580 {
         int row = region.x;
         int column = region.y;
 
+        //네모칸 확인
+        int startRow = row / 3 * 3;
+        int startColumn = column / 3 * 3;
+        for (int i = startRow; i < startRow + 3; i++) {
+            for (int j = startColumn; j < startColumn + 3; j++) {
+                checkNumber[sudoku[i][j]] = true;
+            }
+        }
+
         //행 값 확인
         for (int i = 0; i < 9; i++) {
             checkNumber[sudoku[row][i]] = true;
@@ -45,15 +54,6 @@ public class Baekjoon2580 {
         //열 값 확인
         for (int i = 0; i < 9; i++) {
             checkNumber[sudoku[i][column]] = true;
-        }
-
-        //네모칸 확인
-        int startRow = row / 3 * 3;
-        int startColumn = column / 3 * 3;
-        for (int i = startRow; i < startRow + 3; i++) {
-            for (int j = startColumn; j < startColumn + 3; j++) {
-                checkNumber[sudoku[i][j]] = true;
-            }
         }
 
         for (int i = 1; i < 10; i++) {
