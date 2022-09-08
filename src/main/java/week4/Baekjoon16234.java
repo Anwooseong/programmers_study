@@ -19,8 +19,8 @@ public class Baekjoon16234 {
     static int N, L, R;
     static int[][] countries;
     static boolean[][] mainVisited;
-    int[] dirX = {0, 0, -1, 1};
-    int[] dirY = {1, -1, 0, 0};
+    static int[] dirX = {0, 0, -1, 1};
+    static int[] dirY = {1, -1, 0, 0};
     static Queue<Point> reload = new LinkedList<>();
     static int answer = 0;
     static boolean mainFlag;
@@ -54,7 +54,7 @@ public class Baekjoon16234 {
                             queue.offer(unionAdd);
                             arrayList.add(unionAdd);
                             visited[nextX][nextY] = true;
-                            mainVisited[nextX][nextY] = true;
+                            mainVisited[currentX][currentY] = true;
                         }
                     }
                 }
@@ -65,11 +65,10 @@ public class Baekjoon16234 {
             for (Point region : arrayList) {
                 countries[region.x][region.y] = people;
             }
-            answer++;
-        } else {
-            if (!mainVisited[x][y])
-                reload.offer(point);
         }
+        if (!mainVisited[x][y])
+            reload.offer(point);
+
 
     }
 
@@ -78,6 +77,7 @@ public class Baekjoon16234 {
         ArrayList<Point> arrayList = new ArrayList<>();
         boolean[][] visited = new boolean[N][N];
         int unionPeople = 0;
+        boolean reloadReloadFlag = false;
 
         Point point = new Point(x, y);
         queue.offer(point);
@@ -95,13 +95,14 @@ public class Baekjoon16234 {
                 int nextY = currentY + dirY[i];
                 if (nextX >= 0 && nextY >= 0 && nextX < N && nextY < N) {
                     if (!visited[nextX][nextY]) {
-                        int gap = Math.abs(countries[currentX][currentY]-countries[nextX][nextY]);
+                        int gap = Math.abs(countries[currentX][currentY] - countries[nextX][nextY]);
                         if (gap >= L && gap <= R) {
                             flag = true;
                             Point unionAdd = new Point(nextX, nextY);
                             queue.offer(unionAdd);
                             arrayList.add(unionAdd);
                             visited[nextX][nextY] = true;
+                            reloadReloadFlag = true;
                             mainFlag = true;
                         }
                     }
@@ -114,6 +115,7 @@ public class Baekjoon16234 {
                 countries[region.x][region.y] = people;
             }
         }
+        if (reloadReloadFlag) reload.offer(point);
     }
 
     public static void main(String[] args) {
@@ -133,13 +135,11 @@ public class Baekjoon16234 {
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                T.BFS(i, j);
+                if (!mainVisited[i][j]) T.BFS(i, j);
             }
         }
 
-        for (Point point : reload) {
-            System.out.println(point.x+" "+ point.y);
-        }
+        answer++;
 
         while (!reload.isEmpty()) {
             while (!reload.isEmpty()) {
@@ -149,8 +149,6 @@ public class Baekjoon16234 {
             if (mainFlag) answer++;
             mainFlag = false;
         }
-
-
         System.out.println(answer);
     }
 }
