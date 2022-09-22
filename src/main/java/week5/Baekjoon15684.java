@@ -8,7 +8,6 @@ public class Baekjoon15684 {
     static int end;
     static int[][] ladder;
     static int[] combi;
-    static int answer = Integer.MAX_VALUE;
     static boolean flag = true;
     static boolean finishFlag = false;
 
