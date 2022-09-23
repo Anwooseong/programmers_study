@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-
+//메모리초과로 인해 인스턴트 객체를 생성하지 않으려고 헀다.
 public class Baekjoon2493 {
 
     static int N;
